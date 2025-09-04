@@ -1,0 +1,63 @@
+.sheet-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #f9f9f9;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.chapter {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+.topic {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+.problem-list {
+  list-style: none;
+  padding-left: 0;
+}
+.problem-item {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.problem-item label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.level {
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
+.level.easy {
+  background: #d4f8e8;
+  color: #1b7f4c;
+}
+.level.medium {
+  background: #fff3cd;
+  color: #856404;
+}
+.level.tough {
+  background: #f8d7da;
+  color: #721c24;
+}
+.links a {
+  color: #007bff;
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+.links a:hover {
+  text-decoration: underline;
+}
