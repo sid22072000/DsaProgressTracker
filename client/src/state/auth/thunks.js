@@ -26,7 +26,8 @@ export const login = createAsyncThunk(
 
 export const register = createAsyncThunk(
   "auth/register",
-  async (payload, thunkAPI) => {
+  async (payload, { dispatch }) => {
+    dispatch(setLoading(true));
     try {
       const res = await axios.post(
         `${constants.API_BASE_URL}/users/register`,
@@ -35,21 +36,35 @@ export const register = createAsyncThunk(
           withCredentials: true,
         }
       );
+      dispatch(setUser(res.data));
+      dispatch(setError(null));
       return res.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data.error);
+      dispatch(setUser(null));
+      dispatch(setError(err.response?.data?.error || "Registration failed"));
+      return null;
+    } finally {
+      dispatch(setLoading(false));
     }
   }
 );
 
 export const getMe = createAsyncThunk("auth/getMe", async (_, thunkAPI) => {
+  const { dispatch } = thunkAPI;
+  dispatch(setLoading(true));
   try {
     const res = await axios.get(`${constants.API_BASE_URL}/users/me`, {
       withCredentials: true,
     });
+    dispatch(setUser(res.data));
+    dispatch(setError(null));
     return res.data;
   } catch (err) {
-    return thunkAPI.rejectWithValue(null);
+    dispatch(setUser(null));
+    dispatch(setError("Failed to fetch user info"));
+    return null;
+  } finally {
+    dispatch(setLoading(false));
   }
 });
 
