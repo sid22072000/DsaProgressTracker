@@ -47,6 +47,12 @@ function App() {
           element={user ? <Profile /> : <Navigate to="/login" />}
         />
         <Route
+          path="/"
+          element={
+            user ? <Navigate to="/sheet" /> : <Navigate to="/register" />
+          }
+        />
+        <Route
           path="*"
           element={
             user ? <Navigate to={initialPath} /> : <Navigate to="/login" />
