@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../state/auth/thunks";
+import Loader from "../components/Loader";
 import { Link, Navigate } from "react-router-dom";
 import "./Register.css";
 
 function Register() {
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.auth);
+  const { loading, error, registerSuccess } = useSelector(
+    (state) => state.auth
+  );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +19,7 @@ function Register() {
     dispatch(register({ name, email, password }));
   };
 
-  if (user) return <Navigate to="/sheet" />;
+  if (registerSuccess) return <Navigate to="/login" />;
 
   return (
     <div className="register-container">
@@ -44,7 +47,7 @@ function Register() {
           required
         />
         <button type="submit" disabled={loading}>
-          Register
+          {loading ? <Loader /> : "Register"}
         </button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}

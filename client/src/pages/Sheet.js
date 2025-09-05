@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchChapters } from "../state/sheet/thunks";
 import { fetchProgress, updateProgress } from "../state/progress/thunks";
+import Loader from "../components/Loader";
 import "./Sheet.css";
 
 function Sheet() {
@@ -18,7 +19,7 @@ function Sheet() {
     dispatch(updateProgress({ problemId, completed: checked }));
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (

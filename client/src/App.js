@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMe } from "./state/auth/thunks";
 
 import Login from "./pages/Login";
+import Loader from "./components/Loader";
 import Register from "./pages/Register";
 import Sheet from "./pages/Sheet";
 import Profile from "./pages/Profile";
@@ -17,18 +18,20 @@ import Navbar from "./components/Navbar";
 function App() {
   const { user, loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const [checkedAuth, setCheckedAuth] = React.useState(false);
+  const [initialPath, setInitialPath] = React.useState(
+    window.location.pathname
+  );
+
   useEffect(() => {
-    dispatch(getMe());
+    setInitialPath(window.location.pathname);
+    dispatch(getMe()).finally(() => setCheckedAuth(true));
   }, [dispatch]);
-  if (loading) {
-    return (
-      <div
-        style={{ textAlign: "center", marginTop: "4rem", fontSize: "1.2rem" }}
-      >
-        Loading...
-      </div>
-    );
+
+  if (!checkedAuth || loading) {
+    return <Loader />;
   }
+
   return (
     <Router>
       {user && <Navbar />}
@@ -45,7 +48,9 @@ function App() {
         />
         <Route
           path="*"
-          element={<Navigate to={user ? window.location.pathname : "/login"} />}
+          element={
+            user ? <Navigate to={initialPath} /> : <Navigate to="/login" />
+          }
         />
       </Routes>
     </Router>

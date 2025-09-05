@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { logoutSlice, setError, setLoading, setUser } from "./slice";
+import { setRegisterSuccess } from "./slice";
 import axios from "axios";
 import constants from "../../constants.json";
 
@@ -36,11 +37,11 @@ export const register = createAsyncThunk(
           withCredentials: true,
         }
       );
-      dispatch(setUser(res.data));
+      dispatch(setRegisterSuccess(true));
       dispatch(setError(null));
       return res.data;
     } catch (err) {
-      dispatch(setUser(null));
+      dispatch(setRegisterSuccess(false));
       dispatch(setError(err.response?.data?.error || "Registration failed"));
       return null;
     } finally {
@@ -61,7 +62,6 @@ export const getMe = createAsyncThunk("auth/getMe", async (_, thunkAPI) => {
     return res.data;
   } catch (err) {
     dispatch(setUser(null));
-    dispatch(setError("Failed to fetch user info"));
     return null;
   } finally {
     dispatch(setLoading(false));

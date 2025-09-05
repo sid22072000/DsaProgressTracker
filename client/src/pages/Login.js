@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../state/auth/thunks";
+import Loader from "../components/Loader";
 import { Navigate, Link } from "react-router-dom";
 import "./Login.css";
 
@@ -36,7 +37,7 @@ function Login() {
           required
         />
         <button type="submit" disabled={loading}>
-          Login
+          {loading ? <Loader /> : "Login"}
         </button>
       </form>
       {error && <p style={{ color: "red" }}>{error}</p>}

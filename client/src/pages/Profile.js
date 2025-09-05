@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../state/auth/selectors";
 import { selectChapters } from "../state/sheet/selectors";
 import { selectProgressData } from "../state/progress/selectors";
@@ -10,8 +10,16 @@ import {
   FaChartPie,
 } from "react-icons/fa";
 import "./Profile.css";
+import { useEffect } from "react";
+import { fetchChapters } from "../state/sheet/thunks";
+import { fetchProgress } from "../state/progress/thunks";
 
 function Profile() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchChapters());
+    dispatch(fetchProgress());
+  }, [dispatch]);
   const user = useSelector(selectUser);
   const chapters = useSelector(selectChapters);
   const progress = useSelector(selectProgressData);
